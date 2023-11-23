@@ -37,13 +37,6 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.events') }}">Events</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.userlist') }}">User List</a>
-                        </li>
                         @guest
                         @if (Route::has('login'))
                         <li class="nav-item">
@@ -57,6 +50,13 @@
                                 </li>
                             @endif -->
                         @else
+                        <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.events') }}">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('admin.userlist') }}">User List</a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }}

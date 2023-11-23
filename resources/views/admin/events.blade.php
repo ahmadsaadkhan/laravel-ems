@@ -18,7 +18,7 @@
             </tr>
         </thead>
         <tbody>
-            @forelse ($events as $index => $event)
+            @foreach ($events as $index => $event)
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $event->event_name ?? '' }}</td>
@@ -36,11 +36,7 @@
                 </td>
 
             </tr>
-            @empty
-            <tr>
-                <td colspan="8" class="text-center">No events available</td>
-            </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
 </div>
