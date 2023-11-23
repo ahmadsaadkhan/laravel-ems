@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class EventLogo extends Model
 {
     use HasFactory;
-    protected $table = 'Event_Logo';
+    protected $table = 'event_logo';
 
 }
