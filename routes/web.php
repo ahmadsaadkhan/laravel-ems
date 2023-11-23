@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('user.login');
 });
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/validate-event/{slug}', [App\Http\Controllers\UserEventController::class, 'ValidateEvent'])->name('user.validate-event');
 Route::post('/event-login', [App\Http\Controllers\UserEventController::class, 'login'])->name('user.login');
 Auth::routes();
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->name('admin.events');
     Route::get('/event', [App\Http\Controllers\EventController::class, 'create'])->name('event.create');
     Route::post('/event', [App\Http\Controllers\EventController::class, 'store'])->name('event.store');
