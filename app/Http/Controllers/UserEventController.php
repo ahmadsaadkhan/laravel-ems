@@ -70,4 +70,25 @@ class UserEventController extends Controller
                 ->withErrors(['event_not_found' => 'Event not found.']);
         }
     }
+
+    public function BackUpStreams($id) {
+        if (empty(Auth::user())) {
+            $username = Session::get('username');
+            $user_password = Session::get('user_password');
+            $eventDetails = Event::where('id', $id)
+                ->where('username', $username)
+                ->where('password', md5($user_password))
+                ->where('status', 1)
+                ->first();
+
+            if ($eventDetails) {
+                return view('user.backup-stream', compact('eventDetails'));
+            } else {
+                return redirect('/')->with('event_not_found', 'Event Not Found');
+            }
+        } else {
+            $eventDetails = Event::where('id', $id)->first();
+            return view('user.backup-stream', compact('eventDetails'));
+        }
+    }
 }

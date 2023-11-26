@@ -27,14 +27,13 @@
             <div class="row">
                 <p class="text-center">{{$eventDetails->viewer_instructions}}</p>
                 <div class="col flex-container">
-                    <button class="btn btn-primary focus" id="presentationsBtn">Presentations</button>
-                    <button class="btn btn-warning" id="breakoutsBtn">Breakouts</button>
-                    <a href="{{ route('backup.streams', $eventDetails->id) }}" class="btn btn-success" id="breakoutsBtn">Backup Stream</a>
+                    <button class="btn btn-primary focus" id="presentationsBtn">Presentations Backup</button>
+                    <button class="btn btn-warning" id="breakoutsBtn">Breakouts Backup</button>
                 </div>
                 <div id="Presentations" class="mt-5">
-                    <div class="flex-container">
-                        @if(!empty($eventDetails->presentation_url))
-                        {!! $eventDetails->presentation_url !!}
+                    <div class="flex-container w-100">
+                        @if(!empty($eventDetails->presentation_url_backup))
+                        {!! $eventDetails->presentation_url_backup !!}
                         @endif
                     </div>
                 </div>
@@ -43,7 +42,7 @@
                         @if($eventDetails->breakouts)
                         @foreach($eventDetails->breakouts as $breakout)
                         <div class="flex-container col-6 mt-5">
-                            {!! $breakout->breakout_url !!}
+                            {!! $breakout->backup_breakout_url !!}
                         </div>
                         @endforeach
                         @endif

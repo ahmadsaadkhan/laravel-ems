@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 Route::get('/validate-event/{slug}', [App\Http\Controllers\UserEventController::class, 'ValidateEvent'])->name('user.validate-event');
 Route::post('/event-login', [App\Http\Controllers\UserEventController::class, 'login'])->name('user.login');
+Route::get('/backup-streams/{slug}', [App\Http\Controllers\UserEventController::class, 'BackUpStreams'])->name('backup.streams');
 
 Route::get('/admin', function () {
     return view('auth.login');

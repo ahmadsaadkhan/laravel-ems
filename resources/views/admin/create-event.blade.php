@@ -318,6 +318,7 @@
     $(document).ready(function() {
         if (CKEDITOR) {
             CKEDITOR.config.allowedContent = true;
+            CKEDITOR.config.autoParagraph = false;
         } else {
             console.log("CKEDITOR not found");
         }
