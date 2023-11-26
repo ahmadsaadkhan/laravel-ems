@@ -51,7 +51,7 @@ class EventController extends Controller
 
                 'username' => [
                     'required',
-                    Rule::unique('events', 'username')->ignore($request->event_id), 
+                    Rule::unique('events', 'username')->ignore($request->event_id),
                 ],
                 'password' => ['sometimes', 'required'],
                 'viewer_instructions' => ['required'],
@@ -60,11 +60,6 @@ class EventController extends Controller
                 'username.unique' => 'The username has already been taken.',
             ]);
 
-            $requestData = $request->all();
-            if (array_key_exists('_token', $requestData)) {
-                unset($requestData['_token']);
-            }
-            $requestData['password'] = Hash::make($request->password);
             if ($request->event_id) {
                 $eventStore = Event::find($request->event_id);
             } else {
@@ -79,15 +74,22 @@ class EventController extends Controller
             $eventStore->password = md5($request['password']);
             $eventStore->viewer_instructions = $request->viewer_instructions;
             $eventStore->presentation_url = $request->presentation_url;
+            $eventStore->presentation_url_backup = $request->presentation_url_backup;
             $eventStore->number_of_breakouts = $request->number_of_breakouts;
             $eventStore->logo = $request->formimage;
             $eventStore->save();
 
+            if ($request->event_id) {
+                $breakouts = Breakout::where('event_id', $request->event_id)->delete();
+            }
             $breakoutAttributes = ['breakout_url_', 'breakout_label_'];
+            $backupBreakoutAttributes = ['backup_breakout_url_', 'backup_breakout_label_'];
             for ($i = 1; $i <= $request->number_of_breakouts; $i++) {
                 $breakouts = new Breakout();
                 $breakouts->breakout_url = $request->input($breakoutAttributes[0] . $i);
                 $breakouts->breakout_label = $request->input($breakoutAttributes[1] . $i);
+                $breakouts->backup_breakout_url = $request->input($backupBreakoutAttributes[0] . $i);
+                $breakouts->backup_breakout_label = $request->input($backupBreakoutAttributes[1] . $i);
                 $breakouts->event_id = $eventStore->id;
                 $breakouts->save();
             }
@@ -110,6 +112,8 @@ class EventController extends Controller
         foreach ($event->breakouts as $index => $breakout) {
             $breakouts->{'breakout_url_' . ($index + 1)} = $breakout->breakout_url;
             $breakouts->{'breakout_label_' . ($index + 1)} = $breakout->breakout_label;
+            $breakouts->{'backup_breakout_url_' . ($index + 1)} = $breakout->breakout_url;
+            $breakouts->{'backup_breakout_label_' . ($index + 1)} = $breakout->breakout_label;
         }
         return view('admin.create-event', compact('event', 'breakouts'));
     }
@@ -138,13 +142,15 @@ class EventController extends Controller
         return view('admin.user-list', compact('usersList', 'id'));
     }
 
-    public function UserListExport() {
-            $usersList = UserLoggedInEvent::latest()->get();
-            return $this->Export($usersList);
+    public function UserListExport()
+    {
+        $usersList = UserLoggedInEvent::latest()->get();
+        return $this->Export($usersList);
     }
-    public function EventUserListExport($id) {
-            $usersList = UserLoggedInEvent::where('event_id', $id)->latest()->get();        
-            return $this->Export($usersList);
+    public function EventUserListExport($id)
+    {
+        $usersList = UserLoggedInEvent::where('event_id', $id)->latest()->get();
+        return $this->Export($usersList);
     }
 
     public function Export($data)
@@ -174,30 +180,30 @@ class EventController extends Controller
         return response()->stream($callback, 200, $headers);
     }
 
-    public function saveLogo(Request $request) {
+    public function saveLogo(Request $request)
+    {
         try {
-            if(empty($request->file('image'))){
+            if (empty($request->file('image'))) {
                 $imageName = $request->oldimage;
                 return response()->json(["imageName" => $imageName]);
             }
-        
+
             $request->validate([
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-        
+
             $image = $request->file('image');
-            $imageName = time() . '.' .$image->getClientOriginalExtension();
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-        
+
             $logoStore = new EventLogo();
             $logoStore->image_name = $imageName;
             $logoStore->save();
-        
+
             return response()->json(["imageName" => $imageName]);
         } catch (Exception $e) {
             Log::info("Event Store Flow Error: " . $e->getMessage());
             return redirect()->back()->with('error', 'Something went wrong');
         }
-        
     }
 }

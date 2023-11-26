@@ -18,7 +18,12 @@ Route::get('/', function () {
 });
 Route::get('/validate-event/{slug}', [App\Http\Controllers\UserEventController::class, 'ValidateEvent'])->name('user.validate-event');
 Route::post('/event-login', [App\Http\Controllers\UserEventController::class, 'login'])->name('user.login');
+
+Route::get('/admin', function () {
+    return view('auth.login');
+});
 Auth::routes();
+
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/events', [App\Http\Controllers\EventController::class, 'index'])->name('admin.events');

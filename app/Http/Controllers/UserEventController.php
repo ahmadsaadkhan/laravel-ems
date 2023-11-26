@@ -49,7 +49,7 @@ class UserEventController extends Controller
         }
 
         $eventDetails = Event::where('username', $request->username)
-            ->where('event_name', $request->name)
+        //    ->where('event_name', $request->name)
             ->where('password', md5($request['password']))
             ->where('status', 1)->first();
         if ($eventDetails) {

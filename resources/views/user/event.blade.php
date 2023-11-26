@@ -33,7 +33,7 @@
                 <div id="Presentations" class="mt-5">
                     <div class="flex-container">
                         @if(!empty($eventDetails->presentation_url))
-                        <iframe src="{{ $eventDetails->presentation_url }}" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+                            {!! $eventDetails->presentation_url !!}
                         @endif
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         @if($eventDetails->breakouts)
                         @foreach($eventDetails->breakouts as $breakout)
                         <div class="flex-container col-6 mt-5">
-                            <iframe src="{{ $breakout->breakout_url }}" width="100%" style="aspect-ratio: 16/9; min-height: 340px;" frameborder="0" scrolling="no" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+                            {!! $breakout->breakout_url !!}
                         </div>
                         @endforeach
                         @endif
@@ -58,22 +58,21 @@
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <script>
     $(document).ready(function() {
-    $("#presentationsBtn").click(function() {
-        toggleSections("#Presentations", "#Breakouts", this);
+        $("#presentationsBtn").click(function() {
+            toggleSections("#Presentations", "#Breakouts", this);
+        });
+
+        $("#breakoutsBtn").click(function() {
+            toggleSections("#Breakouts", "#Presentations", this);
+        });
+
+        function toggleSections(showSection, hideSection, clickedBtn) {
+            $(hideSection).hide();
+            $(clickedBtn).addClass("focus");
+            $(clickedBtn).siblings().removeClass("focus");
+            $(showSection).show();
+        }
     });
-
-    $("#breakoutsBtn").click(function() {
-        toggleSections("#Breakouts", "#Presentations", this);
-    });
-
-    function toggleSections(showSection, hideSection, clickedBtn) {
-        $(hideSection).hide();
-        $(clickedBtn).addClass("focus");
-        $(clickedBtn).siblings().removeClass("focus");
-        $(showSection).show();
-    }
-});
-
 </script>
 
 </html>

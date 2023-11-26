@@ -99,8 +99,14 @@
 
                     <div class="col-md-12">
                         <label for="your-subject" class="form-label">Presentation URL</label>
-                        <textarea class="ckeditor form-control" name="presentation_url">{{ isset($event) ? $event->presentation_url : old('presentation_url') }}</textarea>
+                        <textarea class="ckeditor form-control editor" name="presentation_url">{!! isset($event) ? $event->presentation_url : old('presentation_url') !!}</textarea>
                     </div>
+
+                    <div class="col-md-12">
+                        <label for="your-subject" class="form-label">Presentation URL Backup</label>
+                        <textarea class="ckeditor form-control editor" name="presentation_url_backup">{!! isset($event) ? $event->presentation_url_backup : old('presentation_url_backup') !!}</textarea>
+                    </div>
+
                     <div class="col-md-6">
                         <label for="your-subject" class="form-label">Number of Breakouts</label>
                         <select class="form-control" name="number_of_breakouts" id="number_of_breakouts">
@@ -119,7 +125,16 @@
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Breakout 1 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_1">{{isset($breakouts) && isset($breakouts->breakout_url_1) ? $breakouts->breakout_url_1 : old('breakout_url_1')}}</textarea>
+                            <textarea class="ckeditor form-control" name="breakout_url_1">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
+                        </div>
+                        <p>Backup Breakout Url</p>
+                        <div class="col-md-6">
+                            <label for="your-subject" class="form-label">Backup Breakout 1 Label</label>
+                            <input type="text" class="form-control" id="backup_breakout_label_1" name="backup_breakout_label_1" placeholder="Backup Breakout 1 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_1) ? $breakouts->backup_breakout_label_1 : old('backup_breakout_label_1') }}">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="your-subject" class="form-label">Backup Breakout 1 Embed URL</label>
+                            <textarea class="ckeditor form-control" name="backup_breakout_url_1">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_2" style="{{ isset($breakouts) && isset($breakouts->breakout_label_2) ? 'display:block' : 'display:none' }}">
@@ -131,6 +146,15 @@
                             <label class="form-label">Breakout 2 Embed URL</label>
                             <textarea class="ckeditor form-control" name="breakout_url_2">{{isset($breakouts) && isset($breakouts->breakout_url_2) ? $breakouts->breakout_url_2 : old('breakout_url_2')}}</textarea>
                         </div>
+                        <p>Backup Breakout Url</p>
+                        <div class="col-md-6">
+                            <label for="your-subject" class="form-label">Backup Breakout 2 Label</label>
+                            <input type="text" class="form-control" id="backup_breakout_label_2" name="backup_breakout_label_2" placeholder="Backup Breakout 2 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_2) ? $breakouts->backup_breakout_label_2 : old('backup_breakout_label_2') }}">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="your-subject" class="form-label">Backup Breakout 2 Embed URL</label>
+                            <textarea class="ckeditor form-control" name="backup_breakout_url_2">{{isset($breakouts) && isset($breakouts->backup_breakout_url_2) ? $breakouts->backup_breakout_url_2 : old('backup_breakout_url_2')}}</textarea>
+                        </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_3" style="{{ isset($breakouts) && isset($breakouts->breakout_label_3) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
@@ -141,6 +165,16 @@
                             <label class="form-label">Breakout 3 Embed URL</label>
                             <textarea class="ckeditor form-control" name="breakout_url_3">{{isset($breakouts) && isset($breakouts->breakout_url_3) ? $breakouts->breakout_url_3 : old('breakout_url_3')}}</textarea>
                         </div>
+
+                        <p>Backup Breakout Url</p>
+                        <div class="col-md-6">
+                            <label for="your-subject" class="form-label">Backup Breakout 3 Label</label>
+                            <input type="text" class="form-control" id="backup_breakout_label_3" name="backup_breakout_label_3" placeholder="Backup Breakout 3 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_3) ? $breakouts->backup_breakout_label_3 : old('backup_breakout_label_3') }}">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="your-subject" class="form-label">Backup Breakout 3 Embed URL</label>
+                            <textarea class="ckeditor form-control" name="backup_breakout_url_3">{{isset($breakouts) && isset($breakouts->backup_breakout_url_3) ? $breakouts->backup_breakout_url_3 : old('backup_breakout_url_3')}}</textarea>
+                        </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_4" style="{{ isset($breakouts) && isset($breakouts->breakout_label_4) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
@@ -150,6 +184,16 @@
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 4 Embed URL</label>
                             <textarea class="ckeditor form-control" name="breakout_url_4">{{isset($breakouts) && isset( $breakouts->breakout_url_4) ? $breakouts->breakout_url_4 : old('breakout_url_4')}}</textarea>
+                        </div>
+
+                        <p>Backup Breakout Url</p>
+                        <div class="col-md-6">
+                            <label for="your-subject" class="form-label">Backup Breakout 4 Label</label>
+                            <input type="text" class="form-control" id="backup_breakout_label_4" name="backup_breakout_label_4" placeholder="Backup Breakout 4 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_4) ? $breakouts->backup_breakout_label_4 : old('backup_breakout_label_4') }}">
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="your-subject" class="form-label">Backup Breakout 4 Embed URL</label>
+                            <textarea class="ckeditor form-control" name="backup_breakout_url_4">{{isset($breakouts) && isset($breakouts->backup_breakout_url_4) ? $breakouts->backup_breakout_url_4 : old('backup_breakout_url_4')}}</textarea>
                         </div>
                     </div>
 
@@ -222,7 +266,10 @@
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script> -->
+<!-- <script src="https://cdn.ckeditor.com/ckeditor5/43.0.1/classic/ckeditor.js"></script> -->
+<script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+
 <script type="text/javascript">
     $('.datepicker').datepicker({
         format: 'mm-dd-yyyy'
@@ -241,10 +288,39 @@
     });
 </script>
 <script>
-    var elements = document.querySelectorAll('#presentation_url, .ckeditor');
-    Array.from(elements).forEach(function(element) {
-        ClassicEditor
-            .create(element)
+    document.addEventListener('DOMContentLoaded', function() {
+        var editorElements = document.querySelectorAll('.editor');
+
+        editorElements.forEach(function(element) {
+            CKEDITOR.replace(element, {
+                allowedContent: true,
+                extraPlugins: 'codeblock',
+                codeBlock_languages: [{
+                        value: 'plaintext',
+                        language: 'Plain Text'
+                    },
+                    {
+                        value: 'javascript',
+                        language: 'JavaScript'
+                    },
+                    {
+                        value: 'html',
+                        language: 'HTML'
+                    }
+                ],
+                toolbar: [{
+                    name: 'insert',
+                    items: ['CodeBlock']
+                }]
+            });
+        });
+    });
+    $(document).ready(function() {
+        if (CKEDITOR) {
+            CKEDITOR.config.allowedContent = true;
+        } else {
+            console.log("CKEDITOR not found");
+        }
     });
 </script>
 <script>
