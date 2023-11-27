@@ -64,6 +64,7 @@ class EventController extends Controller
                 $eventStore = Event::find($request->event_id);
             } else {
                 $eventStore = new Event;
+                $eventStore->password = md5($request['password']);
             }
             $eventStore->event_name = $request->event_name;
             $eventStore->start_date = Carbon::createFromFormat('m-d-Y', $request->input('start_date'))->format('Y-m-d');
@@ -71,7 +72,6 @@ class EventController extends Controller
             $eventStore->event_url = $request->event_url;
             $eventStore->status = $request->status;
             $eventStore->username = $request->username;
-            $eventStore->password = md5($request['password']);
             $eventStore->viewer_instructions = $request->viewer_instructions;
             $eventStore->presentation_url = $request->presentation_url;
             $eventStore->presentation_url_backup = $request->presentation_url_backup;
@@ -107,6 +107,7 @@ class EventController extends Controller
      */
     public function edit(Event $event, $id)
     {
+        $logoStore = EventLogo::latest()->get();
         $event = Event::with('breakouts')->find($id);
         $breakouts = new stdClass();
         foreach ($event->breakouts as $index => $breakout) {
@@ -115,7 +116,7 @@ class EventController extends Controller
             $breakouts->{'backup_breakout_url_' . ($index + 1)} = $breakout->breakout_url;
             $breakouts->{'backup_breakout_label_' . ($index + 1)} = $breakout->breakout_label;
         }
-        return view('admin.create-event', compact('event', 'breakouts'));
+        return view('admin.create-event', compact('event', 'breakouts', 'logoStore'));
     }
 
     /**
