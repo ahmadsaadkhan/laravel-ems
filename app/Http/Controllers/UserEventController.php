@@ -25,7 +25,7 @@ class UserEventController extends Controller
             if ($eventDetails) {
                 return view('user.event', compact('eventDetails'));
             } else {
-                return redirect('/')->with('event_not_found', 'Event Not Found');
+                return redirect('/')->with('event_not_found', 'Event Not Found 1');
             }
         } else {
             $eventDetails = Event::where('event_url', $slug)->first();
@@ -65,9 +65,8 @@ class UserEventController extends Controller
 
             return redirect()->route('user.validate-event', $eventDetails->event_url);
         } else {
-            return redirect()
-                ->back()
-                ->withErrors(['event_not_found' => 'Event not found.']);
+            return redirect('/')
+                ->withErrors(['event_not_found' => 'Event not found 1.']);
         }
     }
 
@@ -84,7 +83,7 @@ class UserEventController extends Controller
             if ($eventDetails) {
                 return view('user.backup-stream', compact('eventDetails'));
             } else {
-                return redirect('/')->with('event_not_found', 'Event Not Found');
+                return redirect('/')->with('event_not_found', 'Event Not Found 3');
             }
         } else {
             $eventDetails = Event::where('id', $id)->first();

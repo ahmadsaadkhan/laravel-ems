@@ -127,11 +127,7 @@
                             <label for="your-subject" class="form-label">Breakout 1 Embed URL</label>
                             <textarea class="ckeditor form-control" name="breakout_url_1">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
                         </div>
-                        <p>Backup Breakout Url</p>
-                        <div class="col-md-6">
-                            <label for="your-subject" class="form-label">Backup Breakout 1 Label</label>
-                            <input type="text" class="form-control" id="backup_breakout_label_1" name="backup_breakout_label_1" placeholder="Backup Breakout 1 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_1) ? $breakouts->backup_breakout_label_1 : old('backup_breakout_label_1') }}">
-                        </div>
+                       
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 1 Embed URL</label>
                             <textarea class="ckeditor form-control" name="backup_breakout_url_1">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
@@ -146,11 +142,7 @@
                             <label class="form-label">Breakout 2 Embed URL</label>
                             <textarea class="ckeditor form-control" name="breakout_url_2">{{isset($breakouts) && isset($breakouts->breakout_url_2) ? $breakouts->breakout_url_2 : old('breakout_url_2')}}</textarea>
                         </div>
-                        <p>Backup Breakout Url</p>
-                        <div class="col-md-6">
-                            <label for="your-subject" class="form-label">Backup Breakout 2 Label</label>
-                            <input type="text" class="form-control" id="backup_breakout_label_2" name="backup_breakout_label_2" placeholder="Backup Breakout 2 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_2) ? $breakouts->backup_breakout_label_2 : old('backup_breakout_label_2') }}">
-                        </div>
+                        
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 2 Embed URL</label>
                             <textarea class="ckeditor form-control" name="backup_breakout_url_2">{{isset($breakouts) && isset($breakouts->backup_breakout_url_2) ? $breakouts->backup_breakout_url_2 : old('backup_breakout_url_2')}}</textarea>
@@ -166,11 +158,6 @@
                             <textarea class="ckeditor form-control" name="breakout_url_3">{{isset($breakouts) && isset($breakouts->breakout_url_3) ? $breakouts->breakout_url_3 : old('breakout_url_3')}}</textarea>
                         </div>
 
-                        <p>Backup Breakout Url</p>
-                        <div class="col-md-6">
-                            <label for="your-subject" class="form-label">Backup Breakout 3 Label</label>
-                            <input type="text" class="form-control" id="backup_breakout_label_3" name="backup_breakout_label_3" placeholder="Backup Breakout 3 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_3) ? $breakouts->backup_breakout_label_3 : old('backup_breakout_label_3') }}">
-                        </div>
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 3 Embed URL</label>
                             <textarea class="ckeditor form-control" name="backup_breakout_url_3">{{isset($breakouts) && isset($breakouts->backup_breakout_url_3) ? $breakouts->backup_breakout_url_3 : old('backup_breakout_url_3')}}</textarea>
@@ -186,11 +173,6 @@
                             <textarea class="ckeditor form-control" name="breakout_url_4">{{isset($breakouts) && isset( $breakouts->breakout_url_4) ? $breakouts->breakout_url_4 : old('breakout_url_4')}}</textarea>
                         </div>
 
-                        <p>Backup Breakout Url</p>
-                        <div class="col-md-6">
-                            <label for="your-subject" class="form-label">Backup Breakout 4 Label</label>
-                            <input type="text" class="form-control" id="backup_breakout_label_4" name="backup_breakout_label_4" placeholder="Backup Breakout 4 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->backup_breakout_label_4) ? $breakouts->backup_breakout_label_4 : old('backup_breakout_label_4') }}">
-                        </div>
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 4 Embed URL</label>
                             <textarea class="ckeditor form-control" name="backup_breakout_url_4">{{isset($breakouts) && isset($breakouts->backup_breakout_url_4) ? $breakouts->backup_breakout_url_4 : old('backup_breakout_url_4')}}</textarea>

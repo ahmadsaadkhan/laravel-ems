@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('user.login');
-});
-Route::get('/validate-event/{slug}', [App\Http\Controllers\UserEventController::class, 'ValidateEvent'])->name('user.validate-event');
+})->name('event.login');
+Route::get('/events/{slug}', [App\Http\Controllers\UserEventController::class, 'ValidateEvent'])->name('user.validate-event');
 Route::post('/event-login', [App\Http\Controllers\UserEventController::class, 'login'])->name('user.login');
 Route::get('/backup-streams/{slug}', [App\Http\Controllers\UserEventController::class, 'BackUpStreams'])->name('backup.streams');
 

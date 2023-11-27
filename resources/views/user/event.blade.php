@@ -11,7 +11,9 @@
     <div class="container">
         <div class="row mt-1">
             <div class="col-2 mb-1">
-                <img class="logo" src="{{asset('images/event-logo.png')}}" width="200" height="150" />
+                @if($eventDetails->logo)
+                <img class="logo" src="{{ asset('images/' . $eventDetails->logo) }}" alt="Event Logo" width="250" height="150">
+                @endif
             </div>
             <div class="col-12">
                 <h2 class="text-center text-capitalize fw-bold fs-1">{{$eventDetails->event_name}} </h2>
@@ -42,8 +44,13 @@
                     <div class="row">
                         @if($eventDetails->breakouts)
                         @foreach($eventDetails->breakouts as $breakout)
-                        <div class="flex-container col-6 mt-5">
-                            {!! $breakout->breakout_url !!}
+                        <div class="col-6 mt-5">
+                            <div class="flex-container">
+                                <h4>{{ $breakout->breakout_label}}</h4>
+                            </div>
+                            <div class="flex-container">
+                                {!! $breakout->breakout_url !!}
+                            </div>
                         </div>
                         @endforeach
                         @endif
