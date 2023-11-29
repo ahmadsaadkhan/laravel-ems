@@ -84,7 +84,12 @@
                                 @if($eventDetails->breakouts)
                                 @foreach($eventDetails->breakouts as $breakout)
                                 <div class="flex-container col-6 mt-5">
-                                    {!! $breakout->backup_breakout_url !!}
+                                    <div class="flex-container">
+                                        <h4>{{ $breakout->breakout_label}}</h4>
+                                    </div>
+                                    <div class="flex-container">
+                                        {!! $breakout->backup_breakout_url !!}
+                                    </div>
                                 </div>
                                 @endforeach
                                 @endif
