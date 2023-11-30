@@ -54,7 +54,7 @@
         if (isConfirmed) {
             axios({
                     method: 'delete',
-                    url: '/event-delete/' + eventId,
+                    url: '/admin/event-delete/' + eventId,
                 })
                 .then(response => {
                     alert('Event deleted successfully:', response.data);

@@ -124,13 +124,19 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::find($id);
-        if (!$event) {
-            return response()->json(['message' => 'Event not found'], 404);
+        try {
+            $event = Event::find($id);
+            if (!$event) {
+                return response()->json(['message' => 'Event not found'], 404);
+            }
+            $event->delete();
+            return response()->json(['message' => 'Event deleted successfully']);
+        } catch (Exception $e) {
+            Log::error("Event Store Flow Error: " . $e->getMessage());
+            return redirect()->back()->with('error', 'Something went wrong');
         }
-        $event->delete();
-        return response()->json(['message' => 'Event deleted successfully']);
     }
+
 
     public function userList()
     {
