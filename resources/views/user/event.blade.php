@@ -58,7 +58,7 @@
                                 @foreach($eventDetails->breakouts as $breakout)
                                 <div class="col-6 mt-5">
                                     <div class="flex-container">
-                                        <h4>{{ $breakout->breakout_label}}</h4>
+                                        <h4 class="text-center">{{ $breakout->breakout_label}}</h4>
                                     </div>
                                     <div class="flex-container">
                                         {!! $breakout->breakout_url !!}
@@ -85,7 +85,7 @@
                                 @foreach($eventDetails->breakouts as $breakout)
                                 <div class="flex-container col-6 mt-5">
                                     <div class="flex-container">
-                                        <h4>{{ $breakout->breakout_label}}</h4>
+                                        <h4 class="text-center">{{ $breakout->breakout_label}}</h4>
                                     </div>
                                     <div class="flex-container">
                                         {!! $breakout->backup_breakout_url !!}

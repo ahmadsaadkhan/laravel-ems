@@ -113,8 +113,8 @@ class EventController extends Controller
         foreach ($event->breakouts as $index => $breakout) {
             $breakouts->{'breakout_url_' . ($index + 1)} = $breakout->breakout_url;
             $breakouts->{'breakout_label_' . ($index + 1)} = $breakout->breakout_label;
-            $breakouts->{'backup_breakout_url_' . ($index + 1)} = $breakout->breakout_url;
-            $breakouts->{'backup_breakout_label_' . ($index + 1)} = $breakout->breakout_label;
+            $breakouts->{'backup_breakout_url_' . ($index + 1)} = $breakout->backup_breakout_url;
+            $breakouts->{'backup_breakout_label_' . ($index + 1)} = $breakout->backup_breakout_label;
         }
         return view('admin.create-event', compact('event', 'breakouts', 'logoStore'));
     }
