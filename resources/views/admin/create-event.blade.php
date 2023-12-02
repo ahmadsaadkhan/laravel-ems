@@ -36,7 +36,7 @@
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="event_name" class="form-label">Event Name</label>
-                        <input type="text" class="form-control" id="event_name" name="event_name" value="{{ isset($event) ? $event->event_name : old('event_name') }}" placeholder="Event Name" maxlength="30">
+                        <input type="text" class="form-control" id="event_name" name="event_name" value="{{ isset($event) ? $event->event_name : old('event_name') }}" placeholder="Event Name" maxlength="255">
                     </div>
 
                     <div class="col-md-6">

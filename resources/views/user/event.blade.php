@@ -16,7 +16,7 @@
                 @endif
             </div>
             <div class="col-12">
-                <h2 class="text-center text-capitalize fw-bold fs-1">{{$eventDetails->event_name}} </h2>
+                <h2 class="text-center fw-bold fs-1">{{$eventDetails->event_name}} </h2>
                 <p class="text-center">
                     @if ($eventDetails->start_date == $eventDetails->end_date)
                     {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }}
