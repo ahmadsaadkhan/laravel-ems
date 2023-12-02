@@ -23,7 +23,11 @@ Route::get('/backup-streams/{slug}', [App\Http\Controllers\UserEventController::
 Route::get('/admin', function () {
     return view('auth.login');
 });
-Auth::routes();
+Auth::routes([
+    'register' => false,
+    'reset' => false,
+    'verify' => false,
+  ]);
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
