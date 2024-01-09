@@ -1,66 +1,108 @@
-@extends('layouts.app')
+<!-- resources/views/event.blade.php -->
+<html>
 
-@section('content')
-<div class="container" style="margin-top:10px;">
+<head>
+    <title>Client Portal</title>
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    <a href="{{isset($id)? route('event.userlist.export', $id) : route('userlist.export')}}" class="btn btn-success float-end mb-5" id="presentationsBtn">Export</a>
-    <table id="datatable" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Name</th>
-                <th>User Name</th>
-                <th>IP Address</th>
-                <th>Created Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($usersList as $index => $userList)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>
-                    {{ $userList->event_name }}
-                </td>
-                <td>
-                    {{ $userList->username }}
-                </td>
-                <td>
-                    {{ $userList->ip_address }}
-                </td>
-                <td>
-                    {{ $userList->created_at }}
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-<script src="{{asset('js/jquery.min.js')}}"></script>
-<link href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" rel="stylesheet">
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#datatable').DataTable();
-    });
-</script>
-<script>
-    function deleteEvent(eventId) {
-        var isConfirmed = window.confirm("Are you sure you want to delete this event?");
-        if (isConfirmed) {
-            axios({
-                    method: 'delete',
-                    url: '/event-delete/' + eventId,
-                })
-                .then(response => {
-                    alert('Event deleted successfully:', response.data);
-                    window.location.reload();
-                })
-                .catch(error => {
-                    alert('Error deleting event:', error);
-                });
-        } else {
-            console.log('Deletion canceled');
-        }
-    }
-</script>
-@endsection
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-1">
+            <div class="col-2 mb-1">
+                @if($eventDetails->logo)
+                <img class="logo" src="{{ asset('images/' . $eventDetails->logo) }}" alt="Event Logo" width="250" height="150">
+                @endif
+            </div>
+            <div class="col-12">
+                <h2 class="text-center fw-bold fs-1">{{$eventDetails->event_name}} </h2>
+                <p class="text-center">
+                    @if ($eventDetails->start_date == $eventDetails->end_date)
+                    {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }}
+                    @else
+                    {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }} To {{ \Carbon\Carbon::parse($eventDetails->end_date)->format('F j, Y') }}
+                    @endif
+                </p>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="row">
+                <p class="text-center">{{$eventDetails->viewer_instructions}}</p>
+
+
+                <nav class="nav justify-content-center">
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-presentation" type="button" role="tab" aria-controls="nav-presentation" aria-selected="true">Presentations</button>
+                        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-breakouts" type="button" role="tab" aria-controls="nav-breakouts" aria-selected="false">Breakouts</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-presentation-backup" type="button" role="tab" aria-controls="nav-presentation-backup" aria-selected="false">Presentations Backup</button>
+                        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-breakouts-backup" type="button" role="tab" aria-controls="nav-breakouts-backup" aria-selected="false">Breakouts Backup</button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-presentation" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                        <div id="Presentations" class="mt-5">
+                            <div class="flex-container">
+                                @if(!empty($eventDetails->presentation_url))
+                                {!! $eventDetails->presentation_url !!}
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-breakouts" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div id="Breakouts" class="mt-5">
+                            <div class="row">
+                                @if($eventDetails->breakouts)
+                                @foreach($eventDetails->breakouts as $breakout)
+                                <div class="col-6 mt-5">
+                                    <div class="flex-container">
+                                        <h4 class="text-center">{{ $breakout->breakout_label}}</h4>
+                                    </div>
+                                    <div class="flex-container">
+                                        {!! $breakout->breakout_url !!}
+                                    </div>
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-presentation-backup" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div id="Presentations" class="mt-5">
+                            <div class="flex-container w-100">
+                                @if(!empty($eventDetails->presentation_url_backup))
+                                {!! $eventDetails->presentation_url_backup !!}
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-breakouts-backup" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div id="Breakouts" class="mt-5">
+                            <div class="row">
+                                @if($eventDetails->breakouts)
+                                @foreach($eventDetails->breakouts as $breakout)
+                                <div class="flex-container col-6 mt-5">
+                                    <div class="flex-container">
+                                        <h4 class="text-center">{{ $breakout->breakout_label}}</h4>
+                                    </div>
+                                    <div class="flex-container">
+                                        {!! $breakout->backup_breakout_url !!}
+                                    </div>
+                                </div>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-container mt-5">
+            <p class="text-center">Copyright <?php echo date("Y"); ?>, Cutting Edge Communications. Confidential.</p>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -141,6 +141,7 @@ class EventController extends Controller
     public function userList()
     {
         $usersList = UserLoggedInEvent::latest()->get();
+        //dd($usersList);
         return view('admin.user-list', compact('usersList'));
     }
     public function EventUserList($id)

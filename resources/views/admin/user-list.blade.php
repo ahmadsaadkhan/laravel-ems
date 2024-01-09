@@ -2,39 +2,34 @@
 
 @section('content')
 <div class="container" style="margin-top:10px;">
-    <a href="{{route('event.create')}}" class="btn btn-primary focus float-end mb-5" id="presentationsBtn">Add Event</a>
 
-    <table id="datatable" class="table table-striped mt-5" style="width:100%">
+    <a href="{{isset($id)? route('event.userlist.export', $id) : route('userlist.export')}}" class="btn btn-success float-end mb-5" id="presentationsBtn">Export</a>
+    <table id="datatable" class="table table-striped" style="width:100%">
         <thead>
             <tr>
                 <th>No</th>
-                <th>Event Name</th>
-                <th>Event Url</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
+                <th>Name</th>
                 <th>User Name</th>
-                <th>Action</th>
+                <th>IP Address</th>
+                <th>Created Date</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($events as $index => $event)
+            @foreach ($usersList as $index => $userList)
             <tr>
                 <td>{{ $index + 1 }}</td>
-                <td>{{ $event->event_name ?? '' }}</td>
-                <td>@if(isset($event->event_url)) {{ url('portal') }}/{{ $event->event_url }} @endif</td>
-                <td>{{ $event->start_date ?? '' }}</td>
-                <td>{{ $event->end_date ?? '' }}</td>
-                <td>{{ isset($event->status) && $event->status == 1 ? 'Active' : 'Inactive' }}</td>
-                <td>{{ $event->username ?? '' }}</td>
-
                 <td>
-                    <a href="{{ route('event.edit',$event->id) }}"><i class="bi bi-pencil-square h4"></i></a>
-                    <a href="#" id="deleteEventLink" onclick="deleteEvent('{{$event->id}}');"><i class="bi bi-x-circle h4"></i></a>
-                    <a href="{{ route('user.validate-event',$event->event_url) }}" target="_blank"><i class="bi bi-eye h4"></i></a>
-                    <a href="{{ route('event.userlist',$event->id) }}"><i class="bi bi-people h4"></i></a>
+                    {{ $userList->event_name }}
                 </td>
-
+                <td>
+                    {{ $userList->username }}
+                </td>
+                <td>
+                    {{ $userList->ip_address }}
+                </td>
+                <td>
+                    {{ $userList->created_at }}
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -54,7 +49,7 @@
         if (isConfirmed) {
             axios({
                     method: 'delete',
-                    url: '/admin/event-delete/' + eventId,
+                    url: '/event-delete/' + eventId,
                 })
                 .then(response => {
                     alert('Event deleted successfully:', response.data);
