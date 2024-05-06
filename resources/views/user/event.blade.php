@@ -21,7 +21,7 @@
                     @if ($eventDetails->start_date == $eventDetails->end_date)
                     {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }}
                     @else
-                    {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }} To {{ \Carbon\Carbon::parse($eventDetails->end_date)->format('F j, Y') }}
+                    {{ \Carbon\Carbon::parse($eventDetails->start_date)->format('F j, Y') }} - {{ \Carbon\Carbon::parse($eventDetails->end_date)->format('F j, Y') }}
                     @endif
                 </p>
             </div>
