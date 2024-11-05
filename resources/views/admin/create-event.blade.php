@@ -26,7 +26,7 @@
             {!! \Session::get('error') !!}
         </div>
         @endif
-        <div class="col-9">
+        <div class="col-9 border p-3">
             <h1 class="mb-3">Create Event</h1>
             <form method="post" action="{{ route('event.store') }}" id="myform" enctype="multipart/form-data">
                 @csrf
@@ -45,6 +45,7 @@
                             <option value="" {{ (isset($event) ? $event->status : old('status')) == '' ? "selected" : "" }}>Select Status</option>
                             <option value="1" {{ (isset($event) ? $event->status : old('status')) == '1' ? "selected" : "" }}>Active</option>
                             <option value="0" {{ (isset($event) ? $event->status : old('status')) == '0' ? "selected" : "" }}>Inactive</option>
+                            <option value="2" {{ (isset($event) ? $event->status : old('status')) == '2' ? "selected" : "" }}>Completed</option>
                         </select>
                     </div>
 
@@ -86,25 +87,34 @@
                         <label for="your-subject" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username" maxlength="50" value="{{ isset($event) ? $event->username : old('username') }}">
                     </div>
-                    @if(!isset($event))
                     <div class="col-md-6">
                         <label for="your-subject" class="form-label">Password</label>
-                        <input type="text" class="form-control" id="password" name="password" placeholder="Password" maxlength="30" value="{{ old('password') }}">
+                        <input type="text" class="form-control" id="password" name="password" placeholder="Password" maxlength="50" value="">
                     </div>
-                    @endif
+                    <div class="col-md-6">
+                        <label for="your-subject" class="form-label">Billing Code</label>
+                        <input type="text" class="form-control" id="billing_code" name="billing_code" placeholder="Billing Code" maxlength="50" value="{{ isset($event) ? $event->billing_code : old('billing_code') }}">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check mt-4">
+                            <input type="hidden" name="billed" value="0">
+                            <input type="checkbox" class="form-check-input p-1" id="billed" name="billed" value="1" {{ old('billed', isset($event) && $event->billed ? 'checked' : '') }}>
+                            <label for="your-subject" class="form-check-label">Billed</label>
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <label for="your-subject" class="form-label">Viewer instructions</label>
-                        <textarea class="form-control" id="viewer_instructions" name="viewer_instructions" placeholder="Viewer instructions" maxlength="200">{{ isset($event) ? $event->viewer_instructions : old('viewer_instructions') }}</textarea>
+                        <textarea class="form-control" id="viewer_instructions" name="viewer_instructions" placeholder="Click the play button below to view the livestream" maxlength="200">{{ isset($event) ? $event->viewer_instructions : old('viewer_instructions') }}</textarea>
                     </div>
 
                     <div class="col-md-12">
                         <label for="your-subject" class="form-label">Presentation URL</label>
-                        <textarea class="ckeditor form-control editor" name="presentation_url">{!! isset($event) ? $event->presentation_url : old('presentation_url') !!}</textarea>
+                        <textarea class="editor form-control editor" name="presentation_url" placeholder="Coming soon">{!! isset($event) ? $event->presentation_url : old('presentation_url') !!}</textarea>
                     </div>
 
                     <div class="col-md-12">
                         <label for="your-subject" class="form-label">Presentation URL Backup</label>
-                        <textarea class="ckeditor form-control editor" name="presentation_url_backup">{!! isset($event) ? $event->presentation_url_backup : old('presentation_url_backup') !!}</textarea>
+                        <textarea class="editor form-control editor" name="presentation_url_backup" placeholder="Coming soon">{!! isset($event) ? $event->presentation_url_backup : old('presentation_url_backup') !!}</textarea>
                     </div>
 
                     <div class="col-md-6">
@@ -123,93 +133,93 @@
                     <div class="row mt-5" id="breakout_section_1" style="{{ isset($breakouts) && isset($breakouts->breakout_label_1) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label for="your-subject" class="form-label">Breakout 1 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_1" name="breakout_label_1" placeholder="Breakout 1 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_1) ? $breakouts->breakout_label_1 : old('breakout_label_1') }}">
+                            <input type="text" class="form-control" id="breakout_label_1" name="breakout_label_1" placeholder="Breakout 1" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_1) ? $breakouts->breakout_label_1 : old('breakout_label_1') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Breakout 1 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_1">{{isset($breakouts) && isset($breakouts->breakout_url_1) ? $breakouts->breakout_url_1 : old('breakout_url_1')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_1" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->breakout_url_1) ? $breakouts->breakout_url_1 : old('breakout_url_1')}}</textarea>
                         </div>
 
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 1 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_1">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_1" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_1) ? $breakouts->backup_breakout_url_1 : old('backup_breakout_url_1')}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_2" style="{{ isset($breakouts) && isset($breakouts->breakout_label_2) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label for="your-subject" class="form-label">Breakout 2 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_2" name="breakout_label_2" placeholder="Breakout 2 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_2) ? $breakouts->breakout_label_2 : old('breakout_label_2') }}">
+                            <input type="text" class="form-control" id="breakout_label_2" name="breakout_label_2" placeholder="Breakout 2" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_2) ? $breakouts->breakout_label_2 : old('breakout_label_2') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 2 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_2">{{isset($breakouts) && isset($breakouts->breakout_url_2) ? $breakouts->breakout_url_2 : old('breakout_url_2')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_2" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->breakout_url_2) ? $breakouts->breakout_url_2 : old('breakout_url_2')}}</textarea>
                         </div>
                         
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 2 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_2">{{isset($breakouts) && isset($breakouts->backup_breakout_url_2) ? $breakouts->backup_breakout_url_2 : old('backup_breakout_url_2')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_2" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_2) ? $breakouts->backup_breakout_url_2 : old('backup_breakout_url_2')}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_3" style="{{ isset($breakouts) && isset($breakouts->breakout_label_3) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label class="form-label">Breakout 3 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_3" name="breakout_label_3" placeholder="Breakout 3 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_3) ? $breakouts->breakout_label_3 : old('breakout_label_3') }}">
+                            <input type="text" class="form-control" id="breakout_label_3" name="breakout_label_3" placeholder="Breakout 3" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_3) ? $breakouts->breakout_label_3 : old('breakout_label_3') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 3 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_3">{{isset($breakouts) && isset($breakouts->breakout_url_3) ? $breakouts->breakout_url_3 : old('breakout_url_3')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_3" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->breakout_url_3) ? $breakouts->breakout_url_3 : old('breakout_url_3')}}</textarea>
                         </div>
 
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 3 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_3">{{isset($breakouts) && isset($breakouts->backup_breakout_url_3) ? $breakouts->backup_breakout_url_3 : old('backup_breakout_url_3')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_3" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_3) ? $breakouts->backup_breakout_url_3 : old('backup_breakout_url_3')}}</textarea>
                         </div>
                     </div>
                     <div class="row mt-4" id="breakout_section_4" style="{{ isset($breakouts) && isset($breakouts->breakout_label_4) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label class="form-label">Breakout 4 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_4" name="breakout_label_4" placeholder="Breakout 4 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_4) ? $breakouts->breakout_label_4 : old('breakout_label_4') }}">
+                            <input type="text" class="form-control" id="breakout_label_4" name="breakout_label_4" placeholder="Breakout 4" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_4) ? $breakouts->breakout_label_4 : old('breakout_label_4') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 4 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_4">{{isset($breakouts) && isset( $breakouts->breakout_url_4) ? $breakouts->breakout_url_4 : old('breakout_url_4')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_4" placeholder="Coming soon">{{isset($breakouts) && isset( $breakouts->breakout_url_4) ? $breakouts->breakout_url_4 : old('breakout_url_4')}}</textarea>
                         </div>
 
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 4 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_4">{{isset($breakouts) && isset($breakouts->backup_breakout_url_4) ? $breakouts->backup_breakout_url_4 : old('backup_breakout_url_4')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_4" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_4) ? $breakouts->backup_breakout_url_4 : old('backup_breakout_url_4')}}</textarea>
                         </div>
                     </div>
 
                     <div class="row mt-4" id="breakout_section_5" style="{{ isset($breakouts) && isset($breakouts->breakout_label_5) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label class="form-label">Breakout 5 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_5" name="breakout_label_5" placeholder="Breakout 5 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_5) ? $breakouts->breakout_label_5 : old('breakout_label_5') }}">
+                            <input type="text" class="form-control" id="breakout_label_5" name="breakout_label_5" placeholder="Breakout 5" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_5) ? $breakouts->breakout_label_5 : old('breakout_label_5') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 5 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_5">{{isset($breakouts) && isset( $breakouts->breakout_url_5) ? $breakouts->breakout_url_5 : old('breakout_url_5')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_5" placeholder="Coming soon">{{isset($breakouts) && isset( $breakouts->breakout_url_5) ? $breakouts->breakout_url_5 : old('breakout_url_5')}}</textarea>
                         </div>
 
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 5 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_5">{{isset($breakouts) && isset($breakouts->backup_breakout_url_5) ? $breakouts->backup_breakout_url_5 : old('backup_breakout_url_5')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_5" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_5) ? $breakouts->backup_breakout_url_5 : old('backup_breakout_url_5')}}</textarea>
                         </div>
                     </div>
 
                     <div class="row mt-4" id="breakout_section_6" style="{{ isset($breakouts) && isset($breakouts->breakout_label_6) ? 'display:block' : 'display:none' }}">
                         <div class="col-md-6">
                             <label class="form-label">Breakout 6 Label</label>
-                            <input type="text" class="form-control" id="breakout_label_6" name="breakout_label_6" placeholder="Breakout 6 Label" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_6) ? $breakouts->breakout_label_6 : old('breakout_label_6') }}">
+                            <input type="text" class="form-control" id="breakout_label_6" name="breakout_label_6" placeholder="Breakout 6" maxlength="50" value="{{isset($breakouts) && isset($breakouts->breakout_label_6) ? $breakouts->breakout_label_6 : old('breakout_label_6') }}">
                         </div>
                         <div class="col-md-12 mt-2">
                             <label class="form-label">Breakout 6 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="breakout_url_6">{{isset($breakouts) && isset( $breakouts->breakout_url_6) ? $breakouts->breakout_url_6 : old('breakout_url_6')}}</textarea>
+                            <textarea class="editor form-control" name="breakout_url_6" placeholder="Coming soon">{{isset($breakouts) && isset( $breakouts->breakout_url_6) ? $breakouts->breakout_url_6 : old('breakout_url_6')}}</textarea>
                         </div>
 
                         <div class="col-md-12 mt-2">
                             <label for="your-subject" class="form-label">Backup Breakout 6 Embed URL</label>
-                            <textarea class="ckeditor form-control" name="backup_breakout_url_6">{{isset($breakouts) && isset($breakouts->backup_breakout_url_6) ? $breakouts->backup_breakout_url_6 : old('backup_breakout_url_6')}}</textarea>
+                            <textarea class="editor form-control" name="backup_breakout_url_6" placeholder="Coming soon">{{isset($breakouts) && isset($breakouts->backup_breakout_url_6) ? $breakouts->backup_breakout_url_6 : old('backup_breakout_url_6')}}</textarea>
                         </div>
                     </div>
 
@@ -274,6 +284,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info" id="logoupload" data-dismiss="modal">Done</button>
                 </div>
+                
             </div>
         </form>
     </div>
@@ -282,9 +293,9 @@
 <script src="{{asset('js/jquery.min.js')}}"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script> -->
-<!-- <script src="https://cdn.ckeditor.com/ckeditor5/43.0.1/classic/ckeditor.js"></script> -->
-<script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
 
 <script type="text/javascript">
     $('.datepicker').datepicker({
@@ -304,41 +315,15 @@
     });
 </script>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var editorElements = document.querySelectorAll('.editor');
-
-        editorElements.forEach(function(element) {
-            CKEDITOR.replace(element, {
-                allowedContent: true,
-                extraPlugins: 'codeblock',
-                codeBlock_languages: [{
-                        value: 'plaintext',
-                        language: 'Plain Text'
-                    },
-                    {
-                        value: 'javascript',
-                        language: 'JavaScript'
-                    },
-                    {
-                        value: 'html',
-                        language: 'HTML'
-                    }
-                ],
-                toolbar: [{
-                    name: 'insert',
-                    items: ['CodeBlock']
-                }]
-            });
+    // Select all elements with the class 'editor'
+document.querySelectorAll('.editor').forEach(editorElement => {
+    ClassicEditor
+        .create(editorElement)
+        .catch(error => {
+            console.error(error);
         });
-    });
-    $(document).ready(function() {
-        if (CKEDITOR) {
-            CKEDITOR.config.allowedContent = true;
-            CKEDITOR.config.autoParagraph = false;
-        } else {
-            console.log("CKEDITOR not found");
-        }
-    });
+});
+
 </script>
 <script>
     $(document).ready(function() {

@@ -13,6 +13,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Status</th>
+                <th>Billing Code</th>
                 <th>User Name</th>
                 <th>Action</th>
             </tr>
@@ -25,7 +26,8 @@
                 <td>@if(isset($event->event_url)) {{ url('portal') }}/{{ $event->event_url }} @endif</td>
                 <td>{{ $event->start_date ?? '' }}</td>
                 <td>{{ $event->end_date ?? '' }}</td>
-                <td>{{ isset($event->status) && $event->status == 1 ? 'Active' : 'Inactive' }}</td>
+                <td>{{ $event->status == 2 ? 'Completed' : (isset($event->status) && $event->status == 1 ? 'Active' : 'Inactive') }}</td>
+                <td>{{ $event->billing_code ?? '' }}</td>
                 <td>{{ $event->username ?? '' }}</td>
 
                 <td>

@@ -48,12 +48,12 @@ class EventController extends Controller
                 'end_date' => ['required'],
                 'event_url' => ['required'],
                 'status' => ['required'],
-
                 'username' => [
                     'required',
                     Rule::unique('events', 'username')->ignore($request->event_id),
                 ],
-                'password' => ['sometimes', 'required'],
+                'password' => [$request->has('event_id') ? 'sometimes' : 'required'],
+                'billing_code' => ['regex:/^[a-zA-Z0-9\-]+$/'],
                 'viewer_instructions' => ['required'],
                 'presentation_url' => ['required'],
             ], [
@@ -64,6 +64,8 @@ class EventController extends Controller
                 $eventStore = Event::find($request->event_id);
             } else {
                 $eventStore = new Event;
+            }
+            if($request->password) {
                 $eventStore->password = md5($request['password']);
             }
             $eventStore->event_name = $request->event_name;
@@ -74,6 +76,8 @@ class EventController extends Controller
             $eventStore->username = $request->username;
             $eventStore->viewer_instructions = $request->viewer_instructions;
             $eventStore->presentation_url = $request->presentation_url;
+            $eventStore->billing_code = $request->billing_code;
+            $eventStore->billed = $request->boolean('billed', false);
             $eventStore->presentation_url_backup = $request->presentation_url_backup;
             $eventStore->number_of_breakouts = $request->number_of_breakouts;
             $eventStore->logo = $request->formimage;
