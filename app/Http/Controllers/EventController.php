@@ -66,7 +66,7 @@ class EventController extends Controller
                 $eventStore = new Event;
             }
             if($request->password) {
-                $eventStore->password = md5($request['password']);
+                $eventStore->password = $request['password'];
             }
             $eventStore->event_name = $request->event_name;
             $eventStore->start_date = Carbon::createFromFormat('m-d-Y', $request->input('start_date'))->format('Y-m-d');
