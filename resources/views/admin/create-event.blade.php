@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="your-subject" class="form-label">Viewer instructions</label>
-                        <textarea class="form-control" id="viewer_instructions" name="viewer_instructions" placeholder="Click the play button below to view the livestream" maxlength="200">{{ isset($event) ? $event->viewer_instructions : old('viewer_instructions') }}</textarea>
+                        <textarea class="form-control" id="viewer_instructions" name="viewer_instructions" maxlength="200">{!! isset($event) && !empty($event->viewer_instructions) ? $event->viewer_instructions : (old('viewer_instructions') ?: 'Click the play button below to view the livestream') !!}</textarea>
                     </div>
 
                     <div class="col-md-12">
